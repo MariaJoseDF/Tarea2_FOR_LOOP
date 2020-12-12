@@ -44,3 +44,32 @@ grandes_chile <- cbind(grandes_chile, Tamanio = grande)
 grandes_colombia <- cbind(grandes_colombia, Tamanio = grande)
 grandes_peru <- cbind(grandes_peru, Tamanio = grande)
 
+# # # # # # # # 2. REUNIENDO BASES DE DATOS Y DEFINIENDO TIPOLOGIA # # # # # # #
+
+#Cambiando el nombre de las variables con error de sintaxis ya que al no coincidir entre
+#bases de datos no permitian la union de las tablas
+
+##Instalando paquete encontrado online para el cambio de nombre de las variables
+
+install.packages("dplyr")
+library("dplyr")
+
+##Cambiando el nombre de las variables con error de sintaxis
+
+pequena_peru <- rename(pequena_peru, porcentaje_mujeres = procentaje_mujeres)
+micro_chile <- rename(micro_chile, porcentaje_mujeres = procentaje_muejeres)
+medianas_chile <- rename(medianas_chile, porcentaje_mujeres = procentaje_mujeres)
+medianas_peru <- rename(medianas_peru, porcentaje_mujeres = procentaje_muejeres)
+grandes_chile <- rename(grandes_chile, porcentaje_mujeres = procentaje_mujeres)
+grandes_colombia <- rename(grandes_colombia, porcentaje_mujeres = procentaje_mujeres)
+grandes_peru <- rename(grandes_peru, porcentaje_mujeres = procentaje_muejeres)
+
+#Reuniendo las bases de datos
+
+Base_datos_empresas <- rbind(pequena_chile,pequena_colombia,pequena_peru,
+                             micro_chile,micro_colombia,micro_peru,
+                             medianas_chile,medianas_colombia,medianas_peru,
+                             grandes_chile,grandes_colombia,grandes_peru)
+
+#Definiendo la tipologia de cada una de las variables
+
