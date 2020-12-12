@@ -73,3 +73,7 @@ Base_datos_empresas <- rbind(pequena_chile,pequena_colombia,pequena_peru,
 
 #Definiendo la tipologia de cada una de las variables
 
+Tipologia_base_de_datos <- for (i in 1:length(Base_datos_empresas)) {
+  tipo <- typeof(Base_datos_empresas[i])
+  print(paste("La variable",i,"es de tipo",tipo))
+}
