@@ -73,7 +73,60 @@ Base_datos_empresas <- rbind(pequena_chile,pequena_colombia,pequena_peru,
 
 #Definiendo la tipologia de cada una de las variables
 
-Tipologia_base_de_datos <- for (i in 1:length(Base_datos_empresas)) {
-  tipo <- typeof(Base_datos_empresas[i])
-  print(paste("La variable",i,"es de tipo",tipo))
+##Se crea una funcion que contiene un loop que recorre las columnas de la base de datos definiendo su tipología
+##Tipologia_base_de_datos: Entrada: List -> Salida: String
+##Ejemplo: Entrada: Base_datos_empresas -> Salida: La variable 1 es de tipo list... (N = 13)
+
+##Creando la función
+
+Tipologia_base_de_datos <- function(Base_datos_empresas){
+    for (i in 1:length(Base_datos_empresas)) {
+    tipo <- typeof(Base_datos_empresas[i])
+    print(paste("La variable",i,"es de tipo",tipo))
+  }
 }
+
+##Probando la función
+
+Tipologia_base_de_datos(Base_datos_empresas)
+
+# # # # # # 3. DETERMINACION OBSERVACIONES PERU V/S CHILE # # # # # # # # # # # #
+
+#Se crea una funcion que contiene un loop que recorre la columna paises dentro de la base de datos para determinar la
+#cantidad de observaciones que poseen Perú v/s Chile
+#Observaciones: Entrada: list -> Salida: String
+#Ejemplo: Entrada: Base_datos_empresas -> Salida: Chile posee 260 observaciones, mientras que Perú posee 260 observaciones
+
+#Creando la función
+
+Observaciones <- function(Base_datos_empresas){
+  #Se establecen las variables vacias que contendran la cantidad de observaciones de cada país
+  observacioneschile <- 0
+  observacionesperu <- 0
+    #[INICIA LOOP]
+    for (ob in 1:length(Base_datos_empresas$pais)) {
+      #Se establece la condicional para chile
+    if(Base_datos_empresas$pais[ob] == "chile"){
+      #Se aumenta la variable correspondiente 
+      observacioneschile <- observacioneschile + 1
+      #Se establece la condicional para peru
+    }else if(Base_datos_empresas$pais[ob] == "peru"){
+      #Se aumenta la variable correspondiente
+      observacionesperu <- observacionesperu + 1
+    }
+    #[FINALIZA LOOP]
+  }
+  #Se imprime string con los resultados obtenidos
+  print(paste("Chile posee",observacioneschile,"observaciones, mientras que Perú posee",observacionesperu,"observaciones"))
+}
+
+#Probando la función
+
+Observaciones(Base_datos_empresas)
+
+
+
+
+
+
+
