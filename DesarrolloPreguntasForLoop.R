@@ -124,8 +124,51 @@ Observaciones <- function(Base_datos_empresas){
 
 Observaciones(Base_datos_empresas)
 
+# # # # 4. DETERMINACION DEL PAIS CON MAYORES INGRESOS DE EXPLOTACION # # # # # # 
 
 
+
+
+
+
+
+# # # # # 5. CREACIÓN DE NUEVA COLUMNA CON NUEVOS REQUERIMIENTOS # # # # # # # #
+
+#Cambiando las comas por puntos en la variable tasas de interes para poder realizar las operaciones
+
+Base_datos_empresas$tasa_interes <- gsub("[,]",".",Base_datos_empresas$tasa_interes)
+
+#Transformando la variable de tasas de interes de caracteres a valores numericos
+
+Base_datos_empresas$tasa_interes <- as.numeric(Base_datos_empresas$tasa_interes)
+
+#Creando vector que almacenara los datos de la nueva columna
+
+nueva_tasa <- c()
+
+#Creando loop que recorrera la base de datos
+
+for (i in 1:nrow(Base_datos_empresas)) {
+  #[INICIA LOOP]
+  #Estableciendo la condicional para chile
+  if(Base_datos_empresas[i,2] == "chile"){
+    #Agregando al vector el resultado del calculo
+    nueva_tasa <- c(nueva_tasa,(Base_datos_empresas[i,12] * 0.1))
+    #Estableciendo la condicional para peru
+  }else if(Base_datos_empresas[i,2] == "peru"){
+    #Agregando al vector el resultado del calculo
+    nueva_tasa <- c(nueva_tasa,(Base_datos_empresas[i,12] + 0.3))
+    #Estableciendo la condicional para colombia
+  }else if(Base_datos_empresas[i,2] == "colombia"){
+    #Agregando al vector el resultado del calculo
+    nueva_tasa <- c(nueva_tasa,(Base_datos_empresas[i,12] / 10))
+  }
+  #[FINALIZA LOOP]
+}
+
+#Generando y agregando la nueva columna con los datos obtenidos en el loop almacenados en el vector
+
+Base_datos_empresas <- cbind(Base_datos_empresas, nueva_tasa = nueva_tasa)
 
 
 
