@@ -126,11 +126,23 @@ Observaciones(Base_datos_empresas)
 
 # # # # 4. DETERMINACION DEL PAIS CON MAYORES INGRESOS DE EXPLOTACION # # # # # # 
 
+#Cambiando las compas por puntos en la variable tasas de interes para que R las tome como valor numerico
 
+Base_datos_empresas$ingresos <- gsub("[,]",".",Base_datos_empresas$ingresos)
 
+#Transformando la variable ingresos en valores numericos
 
+Base_datos_empresas$ingresos <- as.numeric(Base_datos_empresas$ingresos)
 
+#Creando loop que recorera la base de datos en busqueda del país con mayores ingresos
 
+for (i in 1:nrow(Base_datos_empresas)) {
+  #Estableciendo condicional para encontra fila que posee el ingreso mas alto
+  if(Base_datos_empresas[i,3] == max(Base_datos_empresas[,3])){
+    #Imprimiendo string que indique aquellos paises que cumplen con la condicion y  los montos que poseen
+    print(paste("El pais con mayores ingresos es",Base_datos_empresas[i,2],"con montos de",Base_datos_empresas[i,3]))
+}
+}
 
 # # # # # 5. CREACIÓN DE NUEVA COLUMNA CON NUEVOS REQUERIMIENTOS # # # # # # # #
 
