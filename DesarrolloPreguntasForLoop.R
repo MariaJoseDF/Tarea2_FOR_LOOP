@@ -136,15 +136,46 @@ Base_datos_empresas$ingresos <- gsub("[,]",".",Base_datos_empresas$ingresos)
 
 Base_datos_empresas$ingresos <- as.numeric(Base_datos_empresas$ingresos)
 
-#Creando loop que recorera la base de datos en busqueda del país con mayores ingresos
+#Creando funcion que contiene loop que recorera la base de datos en busqueda del país con mayores ingresos
 
-for (i in 1:nrow(Base_datos_empresas)) {
-  #Estableciendo condicional para encontra fila que posee el ingreso mas alto
-  if(Base_datos_empresas[i,3] == max(Base_datos_empresas[,3])){
-    #Imprimiendo string que indique aquellos paises que cumplen con la condicion y  los montos que poseen
-    print(paste("El pais con mayores ingresos es",Base_datos_empresas[i,2],"con montos de",Base_datos_empresas[i,3]))
+MayorIng <- function(Base_datos_empresas){
+  #Estableciendo las variables que almacenaran los montos de cada pais
+  IngChile <- 0
+  IngColombia <- 0
+  IngPeru <- 0
+  #Creando loop que sumara los montos de cada pais en su variable correspondiente
+  for (m in 1:nrow(Base_datos_empresas)) {
+    #[INICIA LOOP]
+    #Estableciendo condicion para almacenar en ingresos de chile
+    if(Base_datos_empresas[m,2] == "chile"){
+      IngChile <- IngChile + Base_datos_empresas[m,3]
+    #Estableciendo condicion para almacenar en ingresos colombia
+    }else if(Base_datos_empresas[m,2] == "colombia"){
+      IngColombia <- IngColombia + Base_datos_empresas[m,3]
+    #Estableciendo condicion para almacenar en ingresos peru
+    }else if(Base_datos_empresas[m,2] == "peru"){
+      IngPeru <- IngPeru + Base_datos_empresas[m,3]
+    }
+    #[FINALIZA LOOP]
+  }
+  #Definiendo por medio de funcion max el mayor monto de ingresos y almacenandolo en una variable
+  MontoMax <- max(IngPeru,IngColombia,IngChile)
+  #Estableciendo una serie de condicionales para el establecimiento del pais correspondiente al monto maximo encontrado
+  if(IngPeru == MontoMax){
+    PaisMax <- "Peru"
+  }else if(IngColombia == MontoMax){
+    PaisMax <- "Colombia"
+  }else if(IngChile == MontoMax){
+    PaisMax <- "Chile"
+  }
+  #Imprimiendo resultados con el nombre del pais con mayores ingresos y el monto correspondiente
+  print(paste("El pais con mayores ingreso es", PaisMax, "con montos totales de", MontoMax))
 }
-}
+
+#Probando la funcion
+
+MayorIng(Base_datos_empresas)
+
 
 # # # # # 5. CREACIÓN DE NUEVA COLUMNA CON NUEVOS REQUERIMIENTOS # # # # # # # #
 
@@ -184,7 +215,7 @@ for (i in 1:nrow(Base_datos_empresas)) {
 
 Base_datos_empresas <- cbind(Base_datos_empresas, nueva_tasa = nueva_tasa)
 
-# # # # # # # # # # 5. REEMPLAZO DE LA COLUMNA EXPORTACIONES # # # # # # # # #
+# # # # # # # # # # 6. REEMPLAZO DE LA COLUMNA EXPORTACIONES # # # # # # # # #
 
 #Se pide reemplazar  la columna exportaciones con 1 cuando es mayor a 2,1, con un 2
 #cuando es menor 2,1 y un 3 cuando es igual a 2,1
@@ -197,7 +228,7 @@ Base_datos_empresas$exportaciones <- gsub("[,]",".",Base_datos_empresas$exportac
 
 Base_datos_empresas$exportaciones <- as.numeric(Base_datos_empresas$exportaciones)
 
-#Redondeando las variables al primer decimal
+#Redondeando las variables al primer decimal con funcion encontrada online
 
 Base_datos_empresas$exportaciones <- round(Base_datos_empresas$exportaciones,1)
 
@@ -217,3 +248,23 @@ for (r in 1:(length(Base_datos_empresas$exportaciones))) {
   }
   #[FINALIZA LOOP]
 }
+
+# # # # # # # # 7. GRAFICANDO VARIABLES SELECCIONADAS # # # # # # # # # # # # # 
+
+#Se deseea conocer los montos totales de importaciones v/s exportaciones de los distintos paises graficamente
+
+#NOTA: Se volvieron a cargar y ejecutar las bases de datos para deshacer los cambios hechos en la pregunta 6
+
+#Transformando la variable exportaciones
+
+##Cambiando las comas por puntos
+Base_datos_empresas$exportaciones <- gsub("[,]",".",Base_datos_empresas$exportaciones)
+##Tranformando la variable a valores numericos
+Base_datos_empresas$exportaciones <- as.numeric(Base_datos_empresas$exportaciones)
+
+#Transformando la variable importaciones
+
+##Cambiando las compas por puntos
+Base_datos_empresas$importaciones <- gsub("[,]",".",Base_datos_empresas$importaciones)
+##Transformando la variable a valores numericos
+Base_datos_empresas$importaciones <- as.numeric(Base_datos_empresas$importaciones)
