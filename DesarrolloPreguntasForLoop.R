@@ -291,6 +291,5 @@ Country <- c("Chile","Colombia","Peru")
 
 barplot(height = Import, names.arg = Country, main = "Importaciones por pais", ylab = "Montos $MUSD", xlab = "Pais", col = c("blue","yellow","red"))
 
-#NOTA: Se asume que los montos indicados en las bases de datos entregadas corresponden a millones de dolares 
 
 
