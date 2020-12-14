@@ -1,3 +1,5 @@
+#Espacio de trabajo: setwd("C:/Users/maria/OneDrive/Escritorio/ICI Cuarto año/Segundo semestre/Big data/Tarea2_FOR_LOOP")
+
 # # # # # # # # # # 1. CARGANDO BASE DE DATOS # # # # # # # # # # # # # # # # # #
 
 #Instalando paquete para la lectura de archivos csv
@@ -182,6 +184,36 @@ for (i in 1:nrow(Base_datos_empresas)) {
 
 Base_datos_empresas <- cbind(Base_datos_empresas, nueva_tasa = nueva_tasa)
 
+# # # # # # # # # # 5. REEMPLAZO DE LA COLUMNA EXPORTACIONES # # # # # # # # #
 
+#Se pide reemplazar  la columna exportaciones con 1 cuando es mayor a 2,1, con un 2
+#cuando es menor 2,1 y un 3 cuando es igual a 2,1
 
+#Cambiando las comas por puntos en las variables de la columna exportaciones
 
+Base_datos_empresas$exportaciones <- gsub("[,]",".",Base_datos_empresas$exportaciones)
+
+#Transformando la variable exportaciones de caracteres a valores numericos
+
+Base_datos_empresas$exportaciones <- as.numeric(Base_datos_empresas$exportaciones)
+
+#Redondeando las variables al primer decimal
+
+Base_datos_empresas$exportaciones <- round(Base_datos_empresas$exportaciones,1)
+
+#Creando loop que recorrera la columna exportaciones para el reemplazo de las variables
+
+for (r in 1:(length(Base_datos_empresas$exportaciones))) {
+  #[INICA LOOP]
+  #Se establece la primera condicion
+  if(Base_datos_empresas$exportaciones[r] > 2.1){
+    Base_datos_empresas$exportaciones[r] <- 1
+  #Se establece la segunda condicion
+  }else if(Base_datos_empresas$exportaciones[r] < 2.1){
+    Base_datos_empresas$exportaciones[r] <- 2
+  #Se establece la tercera condicion
+  }else if(Base_datos_empresas$exportaciones[r] == 2.1){
+    Base_datos_empresas$exportaciones[r] <- 3
+  }
+  #[FINALIZA LOOP]
+}
