@@ -176,7 +176,6 @@ MayorIng <- function(Base_datos_empresas){
 
 MayorIng(Base_datos_empresas)
 
-
 # # # # # 5. CREACIÓN DE NUEVA COLUMNA CON NUEVOS REQUERIMIENTOS # # # # # # # #
 
 #Cambiando las comas por puntos en la variable tasas de interes para poder realizar las operaciones
@@ -251,16 +250,7 @@ for (r in 1:(length(Base_datos_empresas$exportaciones))) {
 
 # # # # # # # # 7. GRAFICANDO VARIABLES SELECCIONADAS # # # # # # # # # # # # # 
 
-#Se deseea conocer los montos totales de importaciones v/s exportaciones de los distintos paises graficamente
-
-#NOTA: Se volvieron a cargar y ejecutar las bases de datos para deshacer los cambios hechos en la pregunta 6
-
-#Transformando la variable exportaciones
-
-##Cambiando las comas por puntos
-Base_datos_empresas$exportaciones <- gsub("[,]",".",Base_datos_empresas$exportaciones)
-##Tranformando la variable a valores numericos
-Base_datos_empresas$exportaciones <- as.numeric(Base_datos_empresas$exportaciones)
+#Se deseea hacer un grafico que compare los montos de importaciones de cada país para conocer visualmente las diferencias
 
 #Transformando la variable importaciones
 
@@ -268,3 +258,39 @@ Base_datos_empresas$exportaciones <- as.numeric(Base_datos_empresas$exportacione
 Base_datos_empresas$importaciones <- gsub("[,]",".",Base_datos_empresas$importaciones)
 ##Transformando la variable a valores numericos
 Base_datos_empresas$importaciones <- as.numeric(Base_datos_empresas$importaciones)
+
+#Se suman las totalidades de importaciones correspondientes a cada pais
+
+##Estableciendo variables que almacenaran las exportaciones totales de cada pais
+
+ImpChile <- 0
+ImpColombia <- 0
+ImpPeru <- 0
+
+##Creando loop que sumara las importaciones correspondientes a la variable de cada pais
+
+for (i in 1:nrow(Base_datos_empresas)) {
+  if(Base_datos_empresas[i,2] == "chile"){
+    ImpChile <- ImpChile + Base_datos_empresas[i,7]
+  }else if(Base_datos_empresas[i,2] == "colombia"){
+    ImpColombia <- ImpColombia + Base_datos_empresas[i,7]
+  }else if(Base_datos_empresas[i,2] == "peru"){
+    ImpPeru <- ImpPeru + Base_datos_empresas[i,7]
+  }
+}
+
+#Creando vector que almacena las importaciones
+
+Import <- c(ImpChile,ImpColombia,ImpPeru)
+
+#Creando vector que almacena los paises
+
+Country <- c("Chile","Colombia","Peru")
+
+#Creando grafico que mostrara la informacion almacenada en ambos vectores
+
+barplot(height = Import, names.arg = Country, main = "Importaciones por pais", ylab = "Montos $MUSD", xlab = "Pais", col = c("blue","yellow","red"))
+
+#NOTA: Se asume que los montos indicados en las bases de datos entregadas corresponden a millones de dolares 
+
+
